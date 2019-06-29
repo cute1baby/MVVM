@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <h1>{{song}}</h1>
+    <p>《{{album.name}}》
+        <p>是{{singer}}2005年11月发行的专辑</p>
+    </p>
+    <p>主打歌为：{{album.theme}}</p>
+
+    <input v-model="dataBind" type="text">
+    <p>{{dataBind}}</p>
+    <p>试下computed效果：{{consum}}</p>
+</div>
+<script src="mvvm.js"></script>
+<script type="text/javascript">
+let mvvm = new Mvvm({
+    el: '#app',
+    data: {     // Object.defineProperty(obj, 'song', '发如雪');
+        song: '发如雪',
+        album: {
+            name: '十一月的萧邦',
+            theme: '夜曲'
+        },
+        singer: '周杰伦',
+        dataBind: "双向数据绑定",
+        a: 10,
+        b: 15
+    },
+    computed: {
+        consum: function(){
+            return this.a + this.b;
+        }
+    }
+});
+mvvm.song = "一路向北";
+mvvm.album.name = "魔杰座 - 跨时代 - 叶惠美 - 七里香 - 八度空间";
+</script>
+</body>
+</html>
