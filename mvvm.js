@@ -12,7 +12,7 @@ function Mvvm(options = {}) {
      * *数据代理
      */
     for (let key in data) {
-        Object.defineProperty(this, key, {
+        Object.defineProperty(this, key, {  //给实例vm添加上data的key属性。
             configurable: true,
             get() {
                 return this._data[key];     // 如this.a = {b: 1}
@@ -22,15 +22,15 @@ function Mvvm(options = {}) {
             }
         });
     }
+    
+    // 所有事情处理好后执行mounted钩子函数。这就实现了mounted钩子函数 ？？？
+    options.mounted && options.mounted.call(this); 
 
     /** 初始化computed,将this指向实例**/
     initComputed.call(this);     
 
     /*数据编译*/
     new Compile(options.el, this);
-
-    // 所有事情处理好后执行mounted钩子函数。这就实现了mounted钩子函数 ？？？
-    options.mounted && options.mounted.call(this); 
 }
 
 
@@ -85,7 +85,7 @@ function Compile(el, vm) {
     // 将所有的一级节点添加到文档碎片中。   使用文档碎片中，节省开销
     let fragment = document.createDocumentFragment();
     while (child = vm.$el.firstChild) {
-        fragment.appendChild(child);    // 此时将el中的内容放入内存中
+        fragment.appendChild(child);    // 此时将el内的一级标签放入内存中
     }
 
     // 对el里面的内容进行替换
