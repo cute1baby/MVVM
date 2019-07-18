@@ -43,7 +43,7 @@ function Mvvm(options = {}) {
 function Observe(data) {
     // 数据劫持就是通过递归和循环给对象所有属性增加get,set
     for (let key in data) {     // 把data属性通过defineProperty的方式定义属性
-        let dep = new Dep();
+        let dep = new Dep(); // 一个data内n个属性就有n个dep.
         let val = data[key];
         observe(val);   // 递归继续向下找，实现深度的数据劫持
         Object.defineProperty(data, key, {
@@ -96,7 +96,7 @@ function Compile(el, vm) {
 
             if (node.nodeType === 3 && reg.test(txt)) { // 即是文本节点又有大括号的情况{{}}
                 // console.log(RegExp.$1); // 匹配到的第一个分组 如： a.b, c
-                let arr = RegExp.$1.split('.');
+                let arr = RegExp.$1.split('.');  // 匹配{{}}（正则匹配）内的文本
                 let val = vm;
                 arr.forEach(key => {
                     val = val[key];     // 如this.a.b
@@ -114,7 +114,7 @@ function Compile(el, vm) {
 
             /****************双向数据绑定开始******************/
             if (node.nodeType === 1) {  // 元素节点
-                let nodeAttr = node.attributes; // 获取dom上的所有属性,是个类数组
+                let nodeAttr = node.attributes; // 获取元素节点上的所有属性,是个类数组
                 Array.from(nodeAttr).forEach(attr => {
                     let name = attr.name;   // v-model  type
                     let exp = attr.value;   // c        text
