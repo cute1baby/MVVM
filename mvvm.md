@@ -11,6 +11,9 @@ Object.defineProperty()    给对象定义和修改属性的方法。
 函数做了什么事情？
 	把data中的属性进行循环遍历，给每一个属性都添加Object.defineProperty方法。如果属性值仍是对象，则递归，继续给子类key添加Object.defineProperty方法。
 
+为什么一个重新编辑属性也需要给对象进行observer(newVal)?
+举个例子：obj.a被监听，该对象下通过监听存在getter和setter方法，那此时将obj.a = {name:"lizhong"}之后，obj.a下的对象就不存在getter和setter了，此时需要重新给该对象监听，加上getter和setter方法。
+
 
 
 
